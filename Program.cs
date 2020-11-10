@@ -13,33 +13,46 @@ namespace BlogsConsole
         {
             logger.Info("Program started");
 
-            try
+            var db = new BloggingContext();
+            var userInput = "0";
+            do
             {
-
-                // Create and save a new Blog
-                Console.Write("Enter a name for a new Blog: ");
-                var name = Console.ReadLine();
-
-                var blog = new Blog { Name = name };
-
-                var db = new BloggingContext();
-                db.AddBlog(blog);
-                logger.Info("Blog added - {name}", name);
+                Console.WriteLine("Enter your selection:");
+                Console.WriteLine("1) Display all blogs");
+                Console.WriteLine("2) Add Blog");
+                Console.WriteLine("3) Create Post");
+                Console.WriteLine("4) Display Posts");
+                Console.WriteLine("Enter q to quit");
+                userInput = Console.ReadLine();
+                logger.Info("Option {userInput} selected", userInput);
 
                 // Display all Blogs from the database
-                var query = db.Blogs.OrderBy(b => b.Name);
-
-                Console.WriteLine("All blogs in the database:");
-                foreach (var item in query)
+                if(userInput == "1")
                 {
-                    Console.WriteLine(item.Name);
+                    var query = db.Blogs.OrderBy(b => b.Name);
+                    Console.WriteLine("All blogs in the database:");
+                    foreach (var item in query){ Console.WriteLine(item.Name); }
                 }
-            }
-            catch (Exception ex)
-            {
-                logger.Error(ex.Message);
-            }
 
+                // Create and save a new Blog
+                if(userInput == "2")
+                {
+                    Console.Write("Enter a name for a new Blog: ");
+                    var name = Console.ReadLine();
+                    var blog = new Blog { Name = name };
+                    db.AddBlog(blog);
+                    logger.Info("Blog added - {name}", name);
+                }
+
+                if(userInput == "3")
+                {}
+                if(userInput == "4")
+                {}
+
+                
+
+          
+            }while(userInput != "q");
             logger.Info("Program ended");
         }
     }
