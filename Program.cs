@@ -23,8 +23,12 @@ namespace BlogsConsole
                 Console.WriteLine("3) Create Post");
                 Console.WriteLine("4) Display Posts");
                 Console.WriteLine("Enter q to quit");
-                userInput = Console.ReadLine();
-                logger.Info("Option {userInput} selected", userInput);
+                try
+                { 
+                    var userInputCheck = Int32.Parse(userInput = Console.ReadLine());
+                    if(userInputCheck > 4 || userInputCheck < 1){ logger.Error("Invalid option"); }
+                    else{ logger.Info("Option {userInput} selected", userInput);  }
+                }catch(FormatException){ logger.Error("Invalid option"); }
 
                 // Display Blogs
                 if(userInput == "1")
