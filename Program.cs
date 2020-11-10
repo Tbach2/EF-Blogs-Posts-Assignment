@@ -54,7 +54,7 @@ namespace BlogsConsole
                 {}
 
                 
-
+                Console.WriteLine();//spacer
           
             }while(userInput != "q");
             logger.Info("Program ended");
