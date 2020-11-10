@@ -28,14 +28,14 @@ namespace BlogsConsole
 
                 // Display all Blogs from the database
                 if(userInput == "1")
-                {
-                    var query = db.Blogs.OrderBy(b => b.Name);
-                    Console.WriteLine("All blogs in the database:");
-                    foreach (var item in query){ Console.WriteLine(item.Name); }
+                {     
+                    var blogs = db.Blogs.OrderBy(b => b.Name);
+                    Console.WriteLine(db.Blogs.Count() + " Blogs returned");
+                    foreach(var item in blogs){ Console.WriteLine(item.Name); }
                 }
 
                 // Create and save a new Blog
-                if(userInput == "2")
+                else if(userInput == "2")
                 {
                     Console.Write("Enter a name for a new Blog: ");
                     var name = Console.ReadLine();
@@ -44,9 +44,9 @@ namespace BlogsConsole
                     logger.Info("Blog added - {name}", name);
                 }
 
-                if(userInput == "3")
+                else if(userInput == "3")
                 {}
-                if(userInput == "4")
+                else if(userInput == "4")
                 {}
 
                 
