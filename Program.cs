@@ -49,11 +49,41 @@ namespace BlogsConsole
                 }
 
                 else if(userInput == "3")
-                {}
+                {
+                    if(db.Blogs.Count() != 0)
+                    {
+                        int blogId = 0; 
+                        Console.WriteLine("Select the blog you would like to post to:");
+                        var blogs = db.Blogs.OrderBy(b => b.BlogId);
+                        foreach(var item in blogs){ Console.WriteLine(item.BlogId + ")" + " " + item.Name); }
+
+                        try
+                        {
+                            blogId = Int32.Parse(Console.ReadLine());
+                            if(blogId > db.Blogs.Count()){ logger.Error("There are no Blogs saved with that Id"); }
+                            else 
+                            {
+                                Console.WriteLine("Enter the post title: ");
+                                string title = Console.ReadLine();
+                                if (title != "")
+                                {
+                                    Console.WriteLine("Enter the post content:");
+                                    string content = Console.ReadLine();
+                                    var post = new Post{ Title = title, Content = content, BlogId = blogId };
+
+                                    db.AddPost(post);
+                                    logger.Info("Post added - {title}", title);
+                                }
+                                else{ logger.Error("Post title cannot be null"); }
+                            }
+                        }catch(FormatException){ logger.Error("Invalid Blog Id"); }
+
+                    }else{ Console.WriteLine(db.Blogs.Count() + " Blogs returned"); }
+                }
+
                 else if(userInput == "4")
                 {}
 
-                
                 Console.WriteLine();//spacer
           
             }while(userInput != "q");
